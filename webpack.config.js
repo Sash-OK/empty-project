@@ -174,5 +174,7 @@ module.exports = function makeWebpackConfig() {
         htmlIndex
     ];
 
-    return config
+    config.watch = true;
+
+    return config;
 }();
