@@ -4,7 +4,15 @@ const webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     TransferWebpackPlugin = require('transfer-webpack-plugin'),
-    path = require('path');
+    path = require('path'),
+    ENV = process.env.npm_lifecycle_event,
+    isDev = ENV === 'start',
+    extractSass = new ExtractTextPlugin({
+        filename: isDev ? 'style.css' : 'style.[contenthash].css'
+    }),
+    htmlIndex = new HtmlWebpackPlugin({
+        template: './src/index.ejs'
+    });
 
 /*
 module.exports = {
@@ -91,43 +99,52 @@ module.exports = {
     devtool: 'inline-source-map'
 };*/
 
-const extractSass = new ExtractTextPlugin({
-    filename: "style.[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
-});
+module.exports = function makeWebpackConfig() {
+console.log(isDev);
+    let config = {};
 
-module.exports = {
-    entry: './src/app.js',
-    output: {
-        filename: 'bundle.[hash].js',
+    config.entry = './src/app.js';
+
+    config.output = {
+        filename: isDev ? 'bundle.js' : 'bundle.[hash].js',
         path: path.resolve(__dirname, 'app')
-    },
-    resolve: {
+    };
+
+    config.resolve = {
         extensions: ['.js', '.scss']
-    },
+    };
 
-    module: {
-        rules: [{
-            test: /\.scss$/,
-            use: extractSass.extract({
-                use: [{
-                    loader: "css-loader",
-                    options: {
-                        sourceMap: true
-                    }
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        sourceMap: true,
-                        outputStyle: 'compressed'
-                    }
-                }],
-                fallback: "style-loader"
-            })
-        }]
-    },
+    config.module = {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: extractSass.extract({
+                    use: [{
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    }, {
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true,
+                            outputStyle: 'compressed'
+                        }
+                    }],
+                    fallback: "style-loader"
+                })
+            },
+            {
+                /*test: /\.scss$/,
+                use:*/
+            }
+        ]
+    };
 
-    plugins: [
-        extractSass
-    ]
-};
+    config.plugins = [
+        extractSass,
+        htmlIndex
+    ];
+
+    return config
+}();
