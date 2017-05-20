@@ -100,7 +100,7 @@ module.exports = {
 };*/
 
 module.exports = function makeWebpackConfig() {
-console.log(isDev);
+
     let config = {};
 
     config.entry = './src/app.js';
