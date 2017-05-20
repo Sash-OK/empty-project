@@ -111,11 +111,27 @@ module.exports = function makeWebpackConfig() {
     };
 
     config.resolve = {
-        extensions: ['.js', '.scss']
+        extensions: ['.png', '.js', '.scss']
     };
 
     config.module = {
         rules: [
+            {
+                test:   /\.js$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['es2015']
+                        }
+                    },
+                    /*{
+                        loader: 'ng-annotate-loader'
+                    }*/
+                ]
+            },
+
             {
                 test: /\.scss$/,
                 use: extractSass.extract({
@@ -135,8 +151,20 @@ module.exports = function makeWebpackConfig() {
                 })
             },
             {
-                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-                loader: 'file-loader'
+                /*test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'assets/images/[name].[ext]'
+                }*/
+                test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'images/[name].[ext]'
+                        }
+                    }
+                ]
             }
         ]
     };

@@ -1,6 +1,10 @@
 'use strict';
 
 import 'angular';
+import '@uirouter/angularjs';
+import 'angular-sanitize';
+import 'angular-animate';
+
 //import 'script!jquery/dist/jquery.min.js';
 import './styles/app';
 /*import 'angular-file-upload/dist/angular-file-upload.min';
