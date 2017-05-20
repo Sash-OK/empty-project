@@ -91,13 +91,37 @@ module.exports = {
     devtool: 'inline-source-map'
 };*/
 
+const extractSass = new ExtractTextPlugin({
+    filename: "style.[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
+
 module.exports = {
     entry: './src/app.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.[hash].js',
         path: path.resolve(__dirname, 'app')
     },
     resolve: {
         extensions: ['.js', '.scss']
-    }
+    },
+
+    module: {
+        rules: [{
+            test: /\.scss$/,
+            use: extractSass.extract({
+                use: [{
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader"
+                }],
+                // use style-loader in development
+                fallback: "style-loader"
+            })
+        }]
+    },
+
+    plugins: [
+        extractSass
+    ]
 };
