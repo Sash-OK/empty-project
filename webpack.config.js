@@ -135,8 +135,8 @@ module.exports = function makeWebpackConfig() {
                 })
             },
             {
-                /*test: /\.scss$/,
-                use:*/
+                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+                loader: 'file-loader'
             }
         ]
     };

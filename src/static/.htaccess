@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Игнорируем запросы на файлы, тк они отдаются напрямую
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Переписываем все на index.html для html5 роутинга
+RewriteRule ^ index.html
