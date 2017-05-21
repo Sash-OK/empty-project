@@ -13,14 +13,12 @@ function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     // Каркас сайта
         .state('site', {
-            template: '<component data-news="_ctrl.text"></component>',
+            template: '{{_ctrl.text}}<br><component data-text="_ctrl.text"></component>',
             url: '/',
-            controller: ggg,
+            controller: stateCtrl,
             controllerAs: '_ctrl',
             resolve: {
-                test: () => {
-
-                }
+                stateText: () => 'test'
             }
         });
 
@@ -30,11 +28,8 @@ function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     });
 }
 
+function stateCtrl(stateText) {
 
-function ggg(oneService) {
-
-        let _ctrl = this;
-    _ctrl.text = 'test';
-        oneService.test(_ctrl.text);
-
+    const _ctrl = this;
+    _ctrl.text = stateText;
 }

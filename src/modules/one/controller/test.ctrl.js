@@ -2,8 +2,10 @@ import module from '../../';
 
 export default module.controller('componentCtrl', componentCtrl).name;
 
-
 function componentCtrl($state, oneService) {
+    const _ctrl = this;
 
-    oneService.test('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    _ctrl.$onInit = () => {
+        this.text = 'SSSS';
+    }
 }
