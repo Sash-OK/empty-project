@@ -1,10 +1,8 @@
 import module from '../';
 
-import view from './one.html';
-
 module.config(OnConfig);
 
-/* @ngInject */
+
 function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
     $urlRouterProvider.otherwise( function($injector) {
@@ -15,17 +13,28 @@ function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     // Каркас сайта
         .state('site', {
-            templateUrl: view,
+            template: '<component data-news="_ctrl.text"></component>',
             url: '/',
-            controller: () => {
-                let ttt = 'babel worked!';
-                console.log(ttt);
-            },
-            controllerAs: '_ctrl'
+            controller: ggg,
+            controllerAs: '_ctrl',
+            resolve: {
+                test: () => {
+
+                }
+            }
         });
 
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
+}
+
+
+function ggg(oneService) {
+
+        let _ctrl = this;
+    _ctrl.text = 'test';
+        oneService.test(_ctrl.text);
+
 }

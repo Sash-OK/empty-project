@@ -1,13 +1,10 @@
 'use strict';
 
 angular.module('app', [
-    'ui.router'
-    /*'ui.router',
+    'ui.router',
+    'ngStorage',
     'ngSanitize',
-    'ngAnimate',
-    'ngStorage'*/
-
-    //'app.main'
+    'ngAnimate'
 ]);
 
 export default angular.module('app');
