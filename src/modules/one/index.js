@@ -17,8 +17,9 @@ function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('site', {
             templateUrl: view,
             url: '/',
-            controller: function () {
-
+            controller: () => {
+                let ttt = 'babel worked!';
+                console.log(ttt);
             },
             controllerAs: '_ctrl'
         });

@@ -3,15 +3,23 @@
 const webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
-    TransferWebpackPlugin = require('transfer-webpack-plugin'),
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
     path = require('path'),
     ENV = process.env.npm_lifecycle_event,
     isDev = ENV === 'start',
+    sourcePath = __dirname + '/src/',
+    copyFiles = new CopyWebpackPlugin([
+        {from: sourcePath + 'static'},
+        {from: sourcePath + 'static/img', to: '/img'}
+    ]),
+    pluginsProvided = new webpack.ProvidePlugin({
+        _: 'underscore'
+    }),
     extractSass = new ExtractTextPlugin({
-        filename: isDev ? 'style.css' : 'style.[contenthash].css'
+        filename: isDev ? 'style.css' : 'style.[hash].css'
     }),
     mainHTML = new HtmlWebpackPlugin({
-        template: './src/index.ejs'
+        template: sourcePath + '/index.ejs'
     });
 
 /*
@@ -99,11 +107,11 @@ module.exports = {
     devtool: 'inline-source-map'
 };*/
 
-module.exports = function makeWebpackConfig() {
+module.exports = () => {
 
     let config = {};
 
-    config.entry = './src/app.js';
+    config.entry = sourcePath + '/app.js';
 
     config.output = {
         filename: isDev ? 'bundle.js' : 'bundle.[hash].js',
@@ -117,7 +125,7 @@ module.exports = function makeWebpackConfig() {
     config.module = {
         rules: [
             {
-                test:   /\.js$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: [
                     {
@@ -127,8 +135,8 @@ module.exports = function makeWebpackConfig() {
                         }
                     },
                     /*{
-                        loader: 'ng-annotate-loader'
-                    }*/
+                     loader: 'ng-annotate-loader'
+                     }*/
                 ]
             },
 
@@ -141,6 +149,9 @@ module.exports = function makeWebpackConfig() {
                             options: {
                                 sourceMap: true
                             }
+                        },
+                        {
+                            loader: "resolve-url-loader"
                         },
                         {
                             loader: "sass-loader",
@@ -160,14 +171,14 @@ module.exports = function makeWebpackConfig() {
                         loader: 'file-loader',
                         options: {
                             name: '[path][name].[ext]',
-                            context: './src'
+                            context: sourcePath
                         }
                     }
                 ]
             },
             {
                 test: /\.html$/,
-                exclude: [__dirname + '/src/index.ejs', /node_modules/],
+                exclude: [sourcePath + 'index.ejs', /node_modules/],
                 use: ['ngtemplate-loader', 'html-loader']
             }
         ]
@@ -176,16 +187,17 @@ module.exports = function makeWebpackConfig() {
     config.plugins = [
         extractSass,
         mainHTML,
-        new webpack.ProvidePlugin({
-            _: 'underscore'
-        })
+        new webpack.NoEmitOnErrorsPlugin(),
+        copyFiles,
+        pluginsProvided
     ];
 
     config.watch = true;
     config.watchOptions = {
         ignored: /node_modules/
     };
+
     config.devtool = 'cheap-module-eval-source-map';
 
     return config;
-}();
+};

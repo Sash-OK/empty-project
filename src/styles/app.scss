@@ -1,7 +1,28 @@
+@import 'modules/default/default';
+
 body {
-  background-color: red;
+  font-family: 'SegoeUI', sans-serif;
 }
 
 div {
   border: 1px solid #fff;
+}
+
+.h1 {
+  font-weight: normal;
+}
+
+.h5 {
+  font-family: 'SegoeUILight', sans-serif;
+  font-weight: normal;
+}
+
+.h3 {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.h4 {
+  font-family: 'SegoeUISemiBold', sans-serif;
+  font-weight: normal;
 }
