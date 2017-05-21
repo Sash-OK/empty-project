@@ -33,7 +33,8 @@
   },
   "scripts": {
     "develop": "npm i && webpack --progress --colors",
-    "prod": "npm i && webpack --progress --colors"
+    "build": "npm i && webpack --progress --colors",
+    "start": "npm run develop"
   },
   "author": "sss",
   "license": "ISC",
