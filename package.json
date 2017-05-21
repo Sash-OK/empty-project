@@ -1,5 +1,5 @@
 {
-  "name": "uc",
+  "name": "emptyProject",
   "version": "1.0.0",
   "description": "landing",
   "main": "src/enter",
@@ -36,10 +36,10 @@
     "build": "npm i && webpack --progress --colors",
     "start": "npm run develop"
   },
-  "author": "sss",
+  "author": "Sash-OK",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Sash-OK/webpack-2.git"
   }
 }
