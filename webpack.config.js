@@ -111,7 +111,7 @@ module.exports = function makeWebpackConfig() {
     };
 
     config.resolve = {
-        extensions: ['.png', '.js', '.scss']
+        extensions: ['.js', '.scss']
     };
 
     config.module = {
@@ -154,17 +154,13 @@ module.exports = function makeWebpackConfig() {
                 })
             },
             {
-                /*test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-                loader: 'file-loader',
-                options: {
-                    name: 'assets/images/[name].[ext]'
-                }*/
                 test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: 'dist/[name].[ext]'
+                            name: '[path][name].[ext]',
+                            context: './src'
                         }
                     }
                 ]
