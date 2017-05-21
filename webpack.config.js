@@ -175,10 +175,17 @@ module.exports = function makeWebpackConfig() {
 
     config.plugins = [
         extractSass,
-        mainHTML
+        mainHTML,
+        new webpack.ProvidePlugin({
+            _: 'underscore'
+        })
     ];
 
     config.watch = true;
+    config.watchOptions = {
+        ignored: /node_modules/
+    };
+    config.devtool = 'cheap-module-eval-source-map';
 
     return config;
 }();
