@@ -1,5 +1,7 @@
 import module from '../';
 
+import view from './one.html';
+
 module.config(OnConfig);
 
 /* @ngInject */
@@ -13,10 +15,10 @@ function OnConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     // Каркас сайта
         .state('site', {
-            template: '<h1>ROUTER</h1>',
+            templateUrl: view,
             url: '/',
             controller: function () {
-                debugger;
+
             },
             controllerAs: '_ctrl'
         });

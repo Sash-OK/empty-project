@@ -10,7 +10,7 @@ const webpack = require('webpack'),
     extractSass = new ExtractTextPlugin({
         filename: isDev ? 'style.css' : 'style.[contenthash].css'
     }),
-    htmlIndex = new HtmlWebpackPlugin({
+    mainHTML = new HtmlWebpackPlugin({
         template: './src/index.ejs'
     });
 
@@ -135,18 +135,21 @@ module.exports = function makeWebpackConfig() {
             {
                 test: /\.scss$/,
                 use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader",
-                        options: {
-                            sourceMap: true
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                sourceMap: true,
+                                outputStyle: 'compressed'
+                            }
                         }
-                    }, {
-                        loader: "sass-loader",
-                        options: {
-                            sourceMap: true,
-                            outputStyle: 'compressed'
-                        }
-                    }],
+                    ],
                     fallback: "style-loader"
                 })
             },
@@ -161,17 +164,22 @@ module.exports = function makeWebpackConfig() {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: 'images/[name].[ext]'
+                            name: 'dist/[name].[ext]'
                         }
                     }
                 ]
+            },
+            {
+                test: /\.html$/,
+                exclude: [__dirname + '/src/index.ejs', /node_modules/],
+                use: ['ngtemplate-loader', 'html-loader']
             }
         ]
     };
 
     config.plugins = [
         extractSass,
-        htmlIndex
+        mainHTML
     ];
 
     config.watch = true;
