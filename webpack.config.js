@@ -121,9 +121,22 @@ module.exports = () => {
         config.plugins.push(uglifyBundle);
     }
 
-    config.watch = true;
+    config.watch = isDevelop;
     config.watchOptions = {
         ignored: /node_modules/
+    };
+
+    config.devServer = {
+        contentBase: path.join(__dirname, "app"),
+        compress: true,
+        port: 5555,
+        stats: 'errors-only',
+        open: true,
+        overlay: true,
+        historyApiFallback: {
+            disableDotRule: true
+        },
+        host: 'webpack.local'
     };
 
     config.devtool = isDevelop ? 'cheap-module-eval-source-map' : 'source-map';

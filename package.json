@@ -29,10 +29,11 @@
     "style-loader": "^0.17.0",
     "uglify-js": "^2.8.27",
     "uglifyjs-webpack-plugin": "^0.4.3",
-    "webpack": "^2.5.1"
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
-    "develop": "npm i && webpack --progress --colors",
+    "develop": "npm i && webpack-dev-server",
     "build": "npm i && webpack --progress --colors",
     "start": "npm run develop"
   },
