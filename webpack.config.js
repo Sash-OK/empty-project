@@ -37,7 +37,8 @@ module.exports = () => {
 
     config.output = {
         filename: isDevelop ? 'bundle.js' : 'bundle.[hash].js',
-        path: path.resolve(__dirname, 'app')
+        path: path.resolve(__dirname, 'app'),
+        publicPath: '/'
     };
 
     config.resolve = {
