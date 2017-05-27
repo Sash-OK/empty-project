@@ -5,6 +5,7 @@ const webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     CopyWebpackPlugin = require('copy-webpack-plugin'),
     UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+    autoprefixer = require('autoprefixer'),
     path = require('path'),
     ENV = process.env.npm_lifecycle_event,
     isDevelop = ENV === 'develop',
@@ -70,7 +71,15 @@ module.exports = () => {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                importLoaders: 1
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                plugins: () => [autoprefixer('last 50 versions', '> 1%', 'ie 10')]
                             }
                         },
                         {
@@ -80,9 +89,9 @@ module.exports = () => {
                             loader: "sass-loader",
                             options: {
                                 sourceMap: true,
-                                outputStyle: 'compressed'
+                                outputStyle: 'compact'
                             }
-                        }
+                        },
                     ],
                     fallback: "style-loader"
                 })
