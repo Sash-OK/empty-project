@@ -32,7 +32,7 @@ const webpack = require('webpack'),
 
 module.exports = () => {
 
-    let config = {};
+    const config = {};
 
     config.entry = sourcePath + '/app.js';
 
