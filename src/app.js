@@ -4,9 +4,11 @@ import 'angular';
 import '@uirouter/angularjs';
 import 'angular-sanitize';
 import 'angular-animate';
+import 'ngstorage/ngStorage';
+import 'angular-permission';
+import 'restangular';
 
 import './styles/app';
-import 'ngstorage/ngStorage';
 
 const requireComponent = require.context('./modules/', true, /^\.\//);
 

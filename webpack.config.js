@@ -15,7 +15,11 @@ const webpack = require('webpack'),
         {from: sourcePath + 'static/img', to: '/img'}
     ]),
     pluginsProvided = new webpack.ProvidePlugin({
-        _: 'underscore'
+        _: 'lodash',
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Promise: 'es6-promise-promise'
     }),
     extractSass = new ExtractTextPlugin({
         filename: isDevelop ? 'style.css' : 'style.[hash].css'
@@ -25,8 +29,10 @@ const webpack = require('webpack'),
     }),
     uglifyBundle = new UglifyJSPlugin({
         sourceMap: true,
-        compress: {
-            warnings: false
+        uglifyOptions: {
+            compress: {
+                warnings: false
+            }
         }
     });
 
@@ -69,7 +75,7 @@ module.exports = () => {
                 use: extractSass.extract({
                     use: [
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
                                 sourceMap: true,
                                 importLoaders: 1
@@ -83,17 +89,17 @@ module.exports = () => {
                             }
                         },
                         {
-                            loader: "resolve-url-loader"
+                            loader: 'resolve-url-loader'
                         },
                         {
-                            loader: "sass-loader",
+                            loader: 'sass-loader',
                             options: {
                                 sourceMap: true,
                                 outputStyle: 'compact'
                             }
                         },
                     ],
-                    fallback: "style-loader"
+                    fallback: 'style-loader'
                 })
             },
 
@@ -136,7 +142,7 @@ module.exports = () => {
     };
 
     config.devServer = {
-        contentBase: path.join(__dirname, "app"),
+        contentBase: path.join(__dirname, 'app'),
         compress: true,
         port: 5555,
         stats: 'errors-only',
@@ -145,7 +151,7 @@ module.exports = () => {
         historyApiFallback: {
             disableDotRule: true
         },
-        host: 'webpack.local'
+        host: 'localhost'
     };
 
     config.devtool = isDevelop ? 'cheap-module-eval-source-map' : 'source-map';
